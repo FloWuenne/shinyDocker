@@ -9,6 +9,7 @@
 
 library(shiny)
 library(reactable)
+library(data.table)
 
 source("./functions.R")
 table_s3 <- fread("./Table_S3.tsv")
