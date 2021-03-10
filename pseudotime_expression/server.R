@@ -10,6 +10,7 @@
 library(shiny)
 library(reactable)
 library(data.table)
+library(dplyr)
 
 source("./functions.R")
 table_s3 <- fread("./Table_S3.tsv")
@@ -58,7 +59,9 @@ shinyServer(function(input, output) {
     
     output$celltype_table <- renderReactable({
         req(subset_table_s3())
-        reactable(subset_table_s3(),
+        show_table <- subset_table_s3() %>%
+            select(pval,fdr, gene, avg_log2FC, cell_type)
+        reactable(show_table,
                   filterable = TRUE,
                   searchable = TRUE,
                   minRows = 10)
