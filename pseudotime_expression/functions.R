@@ -10,16 +10,20 @@ plot_identified_genes_over_psupertime_goi <- function(psuper_obj,
                                                       legend_plot = "show", 
                                                       legend_position = "bottom"){
   
+  library(RColorBrewer)
+  library(data.table)
+  library(ggplot2)
+  library(scales)
+  library(cowplot)
+  
+  ## use cowplot theme as default 
+  theme_set(theme_cowplot())
+  
   # unpack
   proj_dt 	= psuper_obj$proj_dt
   beta_dt 	= psuper_obj$beta_dt
   x_data 		= psuper_obj$x_data
   params 		= psuper_obj$params
-  
-  # aset
-  beta_nzero 	= beta_dt[ abs_beta > 0 ]
-  n_nzero 	= nrow(beta_nzero)
-  top_genes 	= as.character(beta_nzero[1:min(n_to_plot, nrow(beta_nzero))]$symbol)
   
   # set up data for plotting
   plot_wide 	= cbind(proj_dt, data.table(x_data[, genes_of_interest, drop=FALSE]))
@@ -40,8 +44,8 @@ plot_identified_genes_over_psupertime_goi <- function(psuper_obj,
       axis.text.x = element_blank()
     ) +
     labs(
-      x 		= 'Pseudotime'
-      ,y 		= 'z-scored scaled expression'
+      x 		= 'Pseudotime',
+      y 		= 'z-scored scaled expression'
       ,colour = label_name
     ) +
     theme(plot.title = element_text(face = "bold"),

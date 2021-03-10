@@ -1,26 +1,41 @@
 ## This app let's users select a cell-type and a gene of interest and will plot its expression over pseudotime
 
 library(shiny)
+library(reactable)
+
+# List of genes for user selection
+table_s3 <- fread("./Table_S3.tsv", fill = TRUE)
+table_s3 <- subset(table_s3,!is.na(avg_log2FC))
+cell_types <- sort(unique(table_s3$cell_type))
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
-
-    # Application title
-    titlePanel("Pseudotime expression"),
-
+    
+    titlePanel(""),
+    
     # Sidebar with a slider input for number of bins
     sidebarLayout(
         sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
+            h2("Control panel:"),
+            br(),
+            selectizeInput("celltype_selected",
+                           label = "Select your cell-type of interest",
+                           choices = cell_types,
+                           selected = cell_types[1]),
+            br(),
+            uiOutput("gene_selection"),
+            
+            
         ),
 
         # Show a plot of the generated distribution
         mainPanel(
-            plotOutput("distPlot")
+           h2("Expression plot over pseudotime"),
+           plotOutput("pseudotime_plot"),
+           
+           h2("Results table from GAM analysis on gene expression (Table S3)"),
+           reactableOutput("celltype_table")
+           
         )
     )
 ))
