@@ -33,23 +33,23 @@ plot_identified_genes_over_psupertime_goi <- function(psuper_obj,
   # plot
   g =	ggplot(plot_dt) +
     aes( x=psuper, y=value) +
-    geom_point( size=1, aes(colour=label_input) ) +
+    geom_point( size=2, aes(colour=label_input) ) +
     geom_smooth(se=FALSE, colour='black') +
     scale_colour_brewer(palette = "Dark2") +
     scale_shape_manual( values=c(1, 16) ) +
     scale_x_continuous( breaks=pretty_breaks() ) +
     scale_y_continuous( breaks=pretty_breaks() ) +
     facet_wrap( ~ symbol, scales=scales) +
-    theme(
-      axis.text.x = element_blank()
-    ) +
+    guides(colour = guide_legend(nrow = 1)) +
     labs(
       x 		= 'Pseudotime',
       y 		= 'z-scored scaled expression'
       ,colour = label_name
     ) +
     theme(plot.title = element_text(face = "bold"),
-          strip.text=element_text(colour="white", face = "bold"), strip.background=element_rect(fill="grey20")) 
+          strip.text=element_text(colour="white", face = "bold"), 
+          strip.background=element_rect(fill="grey20"),
+          axis.title = element_text(color="black", face="bold")) 
   
   if(legend_plot == "hide"){
     g  <- g +

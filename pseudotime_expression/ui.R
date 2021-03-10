@@ -16,7 +16,7 @@ shinyUI(fluidPage(
     
     # Sidebar with a slider input for number of bins
     sidebarLayout(
-        sidebarPanel(
+        sidebarPanel(width = 2,
             h2("Control panel:"),
             br(),
             selectizeInput("celltype_selected",
@@ -30,7 +30,7 @@ shinyUI(fluidPage(
         ),
 
         # Show a plot of the generated distribution
-        mainPanel(
+        mainPanel(width = 10,
            h2("Expression plot over pseudotime"),
            plotOutput("pseudotime_plot"),
            
