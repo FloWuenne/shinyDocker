@@ -21,8 +21,11 @@ RUN apt-get update && \
 RUN apt-get install -y git 
 
 # clone git repo
-RUN git clone https://github.com/FloWuenne/shinyDocker.git
+## Add an argument to be able to build container from here when git repo changed
+ARG DUMMY_ARG=unknown
 
+## Clone github repo
+RUN git clone https://github.com/FloWuenne/shinyDocker.git
 WORKDIR "./shinyDocker"
 
 # install renv & restore packages

@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 To build the dockerfile for this app, run the following command in your shell:
 
 ```{bash, eval = FALSE}
-docker build -t perinatheart_pseudotime --no-cache  .
+docker build --build-arg INCUBATOR_VER=12345 -t  perinatheart_pseudotime  .
 ```
 
 
