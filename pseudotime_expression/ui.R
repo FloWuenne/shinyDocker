@@ -2,6 +2,7 @@
 
 library(shiny)
 library(reactable)
+library(data.table)
 
 # List of genes for user selection
 table_s3 <- fread("./Table_S3.tsv", fill = TRUE)
