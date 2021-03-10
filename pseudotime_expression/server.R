@@ -40,7 +40,7 @@ shinyServer(function(input, output) {
     })
     
     pseudotime_object <- reactive({
-        psuper_obj <- readRDS(paste("/home/",Sys.getenv("USERNAME"),"/pseudotime_data/",input$celltype_selected,".rds",sep=""))
+        psuper_obj <- readRDS(paste("/home/florian/pseudotime_data/",input$celltype_selected,".rds",sep=""))
     })
 
     output$pseudotime_plot <- renderPlot({
