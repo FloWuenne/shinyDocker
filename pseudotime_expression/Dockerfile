@@ -7,21 +7,23 @@ RUN apt-get update -qq && apt-get -y --no-install-recommends install \
     libxml2-dev \
     libcairo2-dev \
     libsqlite3-dev \
-    libmariadbd-dev \
     libpq-dev \
     libssh2-1-dev \
     unixodbc-dev \
     libcurl4-openssl-dev \
     libssl-dev
-
+    
 ## update system libraries
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get clean && \
-    apt-get install -y git
+    apt-get clean
+
+RUN apt-get install -y git 
 
 # clone git repo
-RUN git clone 
+RUN git clone https://github.com/FloWuenne/shinyDocker.git
+
+WORKDIR "./shinyDocker"
 
 # install renv & restore packages
 RUN Rscript -e 'install.packages("renv")'
@@ -32,4 +34,4 @@ RUN Rscript -e 'renv::restore()'
 EXPOSE 3838
 
 # run app on container start
-CMD ["R", "-e", "shiny::runApp('/app', host = '0.0.0.0', port = 3838)"]
+CMD ["R", "-e", "shiny::runApp('./pseudotime_expression', host = '0.0.0.0', port = 3838)"]
