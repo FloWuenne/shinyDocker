@@ -40,7 +40,8 @@ plot_identified_genes_over_psupertime_goi <- function(psuper_obj,
     scale_x_continuous( breaks=pretty_breaks() ) +
     scale_y_continuous( breaks=pretty_breaks() ) +
     facet_wrap( ~ symbol, scales=scales) +
-    guides(colour = guide_legend(nrow = 1)) +
+    guides(colour = guide_legend(nrow = 1,
+                                 override.aes = list(size=5))) +
     labs(
       x 		= 'Pseudotime',
       y 		= 'z-scored scaled expression'
@@ -56,7 +57,9 @@ plot_identified_genes_over_psupertime_goi <- function(psuper_obj,
       theme(legend.position = "none")
   }else if (legend_plot == "show"){
     g  <- g +
-      theme(legend.position = legend_position)
+      theme(legend.position = legend_position,
+            legend.title = element_text(color = "black", size = 24),
+            legend.text = element_text(color = "black", size = 20))
   }
   
   return(g)

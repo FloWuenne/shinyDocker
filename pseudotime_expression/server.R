@@ -60,7 +60,10 @@ shinyServer(function(input, output) {
     output$celltype_table <- renderReactable({
         req(subset_table_s3())
         show_table <- subset_table_s3() %>%
-            select(pval,fdr, gene, avg_log2FC, cell_type)
+            select(pval,fdr, gene, avg_log2FC, cell_type) %>%
+            mutate("avg_log2FC_P7v_E14.5" = round(avg_log2FC,4)) %>%
+            select(-avg_log2FC) %>%
+            arrange(avg_log2FC_P7v_E14.5,fdr)
         reactable(show_table,
                   filterable = TRUE,
                   searchable = TRUE,
