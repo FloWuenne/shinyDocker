@@ -17,7 +17,7 @@ shinyUI(fluidPage(
     # Sidebar with a slider input for number of bins
     
     fluidRow(
-        column(width = 2,
+        column(width = 4,
                h2("Control panel:"),
                br(),
                selectizeInput("celltype_selected",
