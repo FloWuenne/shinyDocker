@@ -15,28 +15,31 @@ shinyUI(fluidPage(
     titlePanel(""),
     
     # Sidebar with a slider input for number of bins
-    sidebarLayout(
-        sidebarPanel(width = 4,
-            h2("Control panel:"),
-            br(),
-            selectizeInput("celltype_selected",
-                           label = "Select your cell-type of interest",
-                           choices = cell_types,
-                           selected = cell_types[1]),
-            br(),
-            uiOutput("gene_selection"),
-            
-            
-        ),
+    
+    fluidRow(
+        column(width = 2,
+               h2("Control panel:"),
+               br(),
+               selectizeInput("celltype_selected",
+                              label = "Select your cell-type of interest",
+                              choices = cell_types,
+                              selected = cell_types[1]),
+               br(),
+               uiOutput("gene_selection"),
+               ),
+        
+        column(width = 8,
+               h2("Expression plot over pseudotime"),
+               plotOutput("pseudotime_plot"),
+               ),
+        
+        
+    ),
+    
+    fluidRow(wdith =12,
+             h2("Results table from GAM analysis on gene expression (Table S3)"),
+             reactableOutput("celltype_table")
+             )
 
-        # Show a plot of the generated distribution
-        mainPanel(width = 8,
-           h2("Expression plot over pseudotime"),
-           plotOutput("pseudotime_plot"),
-           
-           h2("Results table from GAM analysis on gene expression (Table S3)"),
-           reactableOutput("celltype_table")
-           
-        )
     )
-))
+)
