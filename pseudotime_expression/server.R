@@ -28,11 +28,11 @@ shinyServer(function(input, output) {
         filename <- normalizePath(file.path('./www',
                                             paste(input$celltype_selected,'.trajectory.png', sep='')))
         
-        # Return a list containing the filename and alt text
+        # Return a list containing the filename and alt text    
         list(src = filename,
              alt = paste("Cell type", input$celltype_selected),
-             width = "100%",
-             height= "100%")
+             width = "400px",
+             height= "400px")
         
     }, deleteFile = FALSE)
     

@@ -14,7 +14,7 @@ shinyUI(fluidPage(
     titlePanel(""),
     
     # Sidebar with a slider input for number of bins
-    fluidRow(column(width = 5, align="center",
+    fluidRow(column(width = 6, align="center",
                             h2("Control panel:"),
                             br(),
                             selectizeInput("celltype_selected",
@@ -26,9 +26,10 @@ shinyUI(fluidPage(
                             uiOutput("gene_selection")
                     ),
     
-    column(width = 7, align="center",
+    column(width = 6, align="center",
            plotOutput("umap_trajectory"))
     ),
+    
     
     fluidRow(
         column(width = 12,align="center",
