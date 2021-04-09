@@ -32,7 +32,7 @@ shinyServer(function(input, output) {
         list(src = filename,
              alt = paste("Cell type", input$celltype_selected),
              width = "90%",
-             height= "120%")
+             height= "100%")
         
     }, deleteFile = FALSE)
     

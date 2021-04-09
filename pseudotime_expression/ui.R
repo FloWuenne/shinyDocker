@@ -14,24 +14,24 @@ shinyUI(fluidPage(
     titlePanel(""),
     
     # Sidebar with a slider input for number of bins
+    fluidRow(column(width = 5, align="center",
+                            h2("Control panel:"),
+                            br(),
+                            selectizeInput("celltype_selected",
+                                           label = "Select your cell-type of interest",
+                                           choices = cell_types,
+                                           selected = cell_types[1],
+                                           width = "100%"),
+                            br(),
+                            uiOutput("gene_selection")
+                    ),
+    
+    column(width = 7, align="center",
+           plotOutput("umap_trajectory"))
+    ),
+    
     fluidRow(
-        column(width = 3, align="center",
-               h2("Control panel:"),
-               br(),
-               selectizeInput("celltype_selected",
-                              label = "Select your cell-type of interest",
-                              choices = cell_types,
-                              selected = cell_types[1],
-                              width = "100%"),
-               br(),
-               uiOutput("gene_selection"),
-               ),
-        
-        column(width = 3, align="center",
-               plotOutput("umap_trajectory")
-        ),
-        
-        column(width = 6,align="center",
+        column(width = 12,align="center",
                h2("Expression plot over pseudotime"),
                plotOutput("pseudotime_plot"),
                ),
