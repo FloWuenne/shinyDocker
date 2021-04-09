@@ -31,7 +31,7 @@ shinyServer(function(input, output) {
         # Return a list containing the filename and alt text
         list(src = filename,
              alt = paste("Cell type", input$celltype_selected),
-             width = "90%",
+             width = "100%",
              height= "100%")
         
     }, deleteFile = FALSE)
