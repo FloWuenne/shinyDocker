@@ -30,9 +30,11 @@ plot_identified_genes_over_psupertime_goi <- function(psuper_obj,
   plot_dt 	= melt.data.table(plot_wide, id=c('psuper', 'label_input', 'label_psuper','cell_id'), variable.name='symbol')
   plot_dt[, symbol := factor(symbol, levels=genes_of_interest)]
   
+  range01 <- function(x){(x-min(x))/(max(x)-min(x))}
+  
   # plot
   g =	ggplot(plot_dt) +
-    aes( x=psuper, y=value) +
+    aes( x=range01(psuper), y=value) +
     geom_point( size=2, aes(colour=label_input) ) +
     geom_smooth(se=FALSE, colour='black') +
     scale_colour_brewer(palette = "Dark2") +

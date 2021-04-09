@@ -14,7 +14,6 @@ library(dplyr)
 
 source("./functions.R")
 table_s3 <- fread("./Table_S3.tsv")
-table_s3 <- subset(table_s3,!is.na(avg_log2FC))
 #source("./pseudotime_expression/functions.R")
 
 ## Test psupertime object
@@ -22,6 +21,20 @@ table_s3 <- subset(table_s3,!is.na(avg_log2FC))
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
+    
+    # Trajectory plot
+    output$umap_trajectory <- renderImage({
+        # When input$n is 3, filename is ./images/image3.jpeg
+        filename <- normalizePath(file.path('./www',
+                                            paste(input$celltype_selected,'.trajectory.png', sep='')))
+        
+        # Return a list containing the filename and alt text
+        list(src = filename,
+             alt = paste("Cell type", input$celltype_selected),
+             width = "90%",
+             height= "120%")
+        
+    }, deleteFile = FALSE)
     
     subset_table_s3 <- reactive({
         req(input$celltype_selected)
@@ -37,7 +50,8 @@ shinyServer(function(input, output) {
         selectizeInput("gene_selected",
                        label = "Select your gene of interest",
                        choices = genes_available,
-                       selected = genes_available[1])
+                       selected = genes_available[1],
+                       width = "100%")
     })
     
     pseudotime_object <- reactive({
@@ -60,14 +74,18 @@ shinyServer(function(input, output) {
     output$celltype_table <- renderReactable({
         req(subset_table_s3())
         show_table <- subset_table_s3() %>%
-            select(pval,fdr, gene, avg_log2FC, cell_type) %>%
-            mutate("avg_log2FC_P7v_E14.5" = round(avg_log2FC,4)) %>%
-            select(-avg_log2FC) %>%
-            arrange(avg_log2FC_P7v_E14.5,fdr)
+            arrange(dexp_fit_t,FDR) %>%
+            mutate("gene" = gsub("-",".",gene)) %>%
+            mutate_if(is.numeric, round,digits = 4) %>%
+            select(-c(cell_type)) %>%
+            select(t_exp_fit_max,t_exp_fit_min,dt_max_fit,dexp_fit_t,dexp_fit_max,pvalue,gene,FDR)
+        
         reactable(show_table,
                   filterable = TRUE,
                   searchable = TRUE,
-                  minRows = 10)
+                  highlight = TRUE,
+                  minRows = 10,
+                  defaultColDef = colDef(align = "center"))
     })
 
 })
