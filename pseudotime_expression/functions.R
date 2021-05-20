@@ -36,7 +36,7 @@ plot_identified_genes_over_psupertime_goi <- function(psuper_obj,
   g =	ggplot(plot_dt) +
     aes( x=range01(psuper), y=value) +
     geom_point( size=2, aes(colour=label_input) ) +
-    geom_smooth(se=FALSE, colour='black') +
+    geom_smooth(se=FALSE, colour='black', method = mgcv::gam, formula = y ~ s(x, k=5)) +
     scale_colour_brewer(palette = "Dark2") +
     scale_shape_manual( values=c(1, 16) ) +
     scale_x_continuous( breaks=pretty_breaks() ) +
